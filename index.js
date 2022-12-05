@@ -1,49 +1,6 @@
-const redux = require("redux");
-const createStore = redux.createStore;
-const bindActionCreators = redux.bindActionCreators;
-
-// action types
-const CAKE_ORDERED = "CAKE_ORDERED";
-const CAKE_RESTOCKED = "CAKE_RESTOCKED";
-
-// actions
-const orderCake = (quantity = 1) => ({
-  type: CAKE_ORDERED,
-  payload: quantity,
-});
-
-const restockCake = (quantity = 1) => ({
-  type: CAKE_RESTOCKED,
-  payload: quantity,
-});
-
-// state
-const initialState = {
-  numOfCakes: 10,
-};
-
-// reducer
-const cakeReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case CAKE_ORDERED:
-      return {
-        ...state,
-        numOfCakes:
-          state.numOfCakes - action.payload < 0
-            ? 0
-            : state.numOfCakes - action.payload,
-      };
-    case CAKE_RESTOCKED:
-      return {
-        ...state,
-        numOfCakes: state.numOfCakes + action.payload,
-      };
-    default:
-      return state;
-  }
-};
-
-const store = createStore(cakeReducer);
+const cakeActions = require("./reducers/cake/actions");
+const iceCreamActions = require("./reducers/iceCream/actions");
+const store = require("./store");
 
 console.log("initial state", store.getState());
 
@@ -52,20 +9,16 @@ const unsubscribe = store.subscribe(() =>
   console.log("updated state", store.getState())
 );
 
-// dispatch actions
-// store.dispatch(orderCake());
-// store.dispatch(restockCake());
-// store.dispatch(orderCake(2));
-// store.dispatch(restockCake(8));
-// store.dispatch(orderCake(2));
-// store.dispatch(orderCake(4));
+// perform actions
+cakeActions.orderCake();
+cakeActions.orderCake();
+cakeActions.orderCake();
+cakeActions.restockCake(3);
 
-// bind all actions into a single object
-const actions = bindActionCreators({ orderCake, restockCake }, store.dispatch);
-actions.orderCake();
-actions.orderCake();
-actions.orderCake();
-actions.restockCake(3);
+iceCreamActions.orderIceCream();
+iceCreamActions.orderIceCream();
+iceCreamActions.restockIceCream();
+iceCreamActions.orderIceCream(3);
 
 // unsubscribe listeners
 unsubscribe();
