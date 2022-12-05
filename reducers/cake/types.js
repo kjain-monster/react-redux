@@ -1,0 +1,2 @@
+module.exports.CAKE_ORDERED = "CAKE_ORDERED";
+module.exports.CAKE_RESTOCKED = "CAKE_RESTOCKED";
