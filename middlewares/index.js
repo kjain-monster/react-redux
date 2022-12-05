@@ -1,4 +1,6 @@
 const { applyMiddleware } = require("redux");
 const logger = require("./logger");
 
-module.exports = applyMiddleware(logger)
+const middlewares = [logger];
+
+module.exports = applyMiddleware(...middlewares);
